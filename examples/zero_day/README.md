@@ -1,29 +1,31 @@
-# Zero-Day Example
+# Zero-Day
 
-Beeple's "Zero-Day" sci-fi corridor from NVIDIA ORCA, path-traced with Bevy Solari. All of
-the light comes from approximately 10,000 emissive triangles, which Solari turns into area
-lights. The example plays the film's animation and follows the film camera.
+Beeple's "Zero-Day" corridor from NVIDIA ORCA, path-traced with Bevy Solari. All of the
+light comes from about 10,000 emissive triangles, and Solari turns these triangles into
+area lights. The example plays the animation of the film and follows the film camera.
 
 ## Getting the scene
 
-Download "Zero-Day" [from developer.nvidia.com](https://developer.nvidia.com/orca/beeple-zero-day).
+Download the scene from [NVIDIA ORCA](https://developer.nvidia.com/orca/beeple-zero-day).
 
-Bevy can't load FBX assets, so convert each measure that you want with the headless
-Blender helper and put the result in this example's `assets/` folder. The helper needs
-Blender 4.x or 5.x:
+Bevy can't read FBX files, so you must convert the measures that you want into glTF
+binaries. The `convert.py` script does this with Blender 4 or Blender 5. Put the result in
+the `assets/` folder of this example.
 
 ```console
-# measure_one (the default)
 blender --background --python-exit-code 1 --python convert.py -- \
   "MEASURE_ONE/MEASURE_ONE.fbx" \
   "examples/zero_day/assets/zero_day_measure_one.glb"
+```
 
-# measure_seven
+The example loads `measure_one` by default. The other two measures are optional, and you
+convert them with the same command.
+
+```console
 blender --background --python-exit-code 1 --python convert.py -- \
   "MEASURE_SEVEN/MEASURE_SEVEN.fbx" \
   "examples/zero_day/assets/zero_day_measure_seven.glb"
 
-# measure_seven_colored_lights
 blender --background --python-exit-code 1 --python convert.py -- \
   "MEASURE_SEVEN/MEASURE_SEVEN_COLORED_LIGHTS.fbx" \
   "examples/zero_day/assets/zero_day_measure_seven_colored_lights.glb"
@@ -33,27 +35,20 @@ blender --background --python-exit-code 1 --python convert.py -- \
 
 ```console
 cargo run -p zero_day --release
-cargo run -p zero_day --release -- --scene measure_seven
-# with DLSS Ray Reconstruction; needs an NVIDIA RTX GPU and the DLSS SDK
-cargo run -p zero_day --release --features dlss
 ```
 
-Press C to change between the film flythrough and free-fly with WASD and the mouse. Press
-N to turn DLSS Ray Reconstruction on and off. Press B to run a short benchmark and print
-the result to the console.
+To load a different measure, add `--scene measure_seven` or `--scene
+measure_seven_colored_lights`. Run the example with `--help` to see all of the options.
+
+Press `C` to change between the film camera and free flight. Press `N` to turn DLSS Ray
+Reconstruction on and off. Press `B` to run a short benchmark. The benchmark prints its
+result to the console.
+
+## DLSS
+
+The `dlss` feature denoises the output of Solari with DLSS Ray Reconstruction. It needs an
+NVIDIA RTX GPU and the DLSS SDK, so it's off by default.
 
 ```console
-Options:
-  --scene       which scene to load: measure_one (default), measure_seven, or
-                measure_seven_colored_lights
-  --emissive    emissive multiplier for the light panels (default 150000)
-  --no-pulse    disable the synthetic emissive pulse that substitutes for the film's
-                animated lights
-  --no-solari   render without Solari, with a flat ambient light instead (not
-                representative; for profiling and smoke tests)
-  --resolution  render resolution as WxH (default 1920x1080)
-  --dlss-quality
-                DLSS quality mode: auto (default), dlaa, quality, balanced, performance,
-                or ultra_performance
-  --help        display usage information
+cargo run -p zero_day --release --features dlss
 ```

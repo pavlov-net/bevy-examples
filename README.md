@@ -1,52 +1,26 @@
 # bevy-examples
 
-Standalone [Bevy](https://bevy.org) examples that are too large, too asset-heavy, or too
-niche to live in the engine repo. Each example is its own crate under `examples/`, sharing
-one Cargo workspace.
+Bevy examples that are too large to keep in the engine repository. Each example is a
+separate crate in `examples/`, and all of them share one Cargo workspace.
 
-These track Bevy's `main` branch, not a published release. `Cargo.lock` is committed, so a
-fresh checkout builds against a known-good commit; `cargo update -p bevy` moves to a newer
-`main`.
+The examples build against the `main` branch of Bevy, not against a release. The
+`Cargo.lock` file is committed, so a new checkout builds against a known good commit of
+`main`. Run `cargo update -p bevy` to move to a newer commit.
 
 ## Examples
 
 | Example | Description |
 | --- | --- |
-| [`zero_day`](examples/zero_day) | Beeple's "Zero-Day" sci-fi corridor from NVIDIA ORCA, path-traced with Bevy Solari. |
+| [`zero_day`](examples/zero_day) | Beeple's "Zero-Day" corridor, path-traced with Bevy Solari. |
 
 ## Running
+
+Always build in release mode. These scenes are large, and a debug build of a path tracer
+is too slow to use.
 
 ```console
 cargo run -p zero_day --release
 ```
 
-Release mode matters: these are heavy scenes, and a debug build of a path tracer is
-unusably slow. The workspace already optimizes dependencies in `dev` builds for the same
-reason.
-
-Most examples need scene assets that are licensed separately from this repo and are not
-checked in. See each example's `README.md` for where to download them and how to convert
-them.
-
-## Linux dependencies
-
-Bevy's default features include the Wayland and X11 backends, ALSA audio, and gamepad
-support, so a Linux build needs their development packages:
-
-```console
-sudo apt-get install libasound2-dev libudev-dev libwayland-dev libxkbcommon-dev
-```
-
-See [Bevy's Linux setup notes](https://github.com/bevyengine/bevy/blob/main/docs/linux_dependencies.md)
-for other distributions.
-
-## Faster builds
-
-Copy `.cargo/config_fast_builds.toml` to `.cargo/config.toml` and follow the comments in
-it to enable a faster linker. This is the same file Bevy ships.
-
-## License
-
-The example code is dual-licensed under [MIT](LICENSE-MIT) or
-[Apache-2.0](LICENSE-APACHE), matching Bevy. Scene assets are **not** covered by these
-licenses — each carries its own terms from its original source.
+Most of the examples need scene assets that this repository doesn't include. The
+`README.md` file of each example tells you how to get them.
