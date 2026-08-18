@@ -1,0 +1,19 @@
+# Rust build artifacts
+/target/
+
+# Downloaded and converted scene assets are large and licensed separately; keep them out
+# of the repo.
+examples/*/assets/*
+!examples/*/assets/.gitkeep
+
+# Bevy asset processing
+imported_assets/
+.web-asset-cache/
+
+# Local cargo overrides (see .cargo/config_fast_builds.toml)
+.cargo/config.toml
+
+# Editor and OS cruft
+.vscode/
+.idea/
+.DS_Store
