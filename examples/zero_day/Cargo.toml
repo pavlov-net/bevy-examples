@@ -1,0 +1,22 @@
+[package]
+name = "zero_day"
+version = "0.1.0"
+edition.workspace = true
+license.workspace = true
+publish.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+bevy = { workspace = true, features = [
+  "bevy_camera_controller",
+  "free_camera",
+  "bevy_solari",
+] }
+
+argh.workspace = true
+
+[features]
+# Use `--features dlss` to enable denoising with DLSS Ray Reconstruction in Solari. It
+# is off by default because a build with it needs the DLSS SDK.
+dlss = ["bevy/dlss"]
+force_disable_dlss = ["bevy/force_disable_dlss"]

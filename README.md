@@ -10,13 +10,14 @@ fresh checkout builds against a known-good commit; `cargo update -p bevy` moves 
 
 ## Examples
 
-None yet. Each one lands as its own crate under `examples/`, picked up by the
-`examples/*` workspace glob.
+| Example | Description |
+| --- | --- |
+| [`zero_day`](examples/zero_day) | Beeple's "Zero-Day" sci-fi corridor from NVIDIA ORCA, path-traced with Bevy Solari. |
 
 ## Running
 
 ```console
-cargo run -p <example> --release
+cargo run -p zero_day --release
 ```
 
 Release mode matters: these are heavy scenes, and a debug build of a path tracer is
