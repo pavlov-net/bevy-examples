@@ -6,22 +6,34 @@ area lights. The example plays the animation of the film and follows the film ca
 
 ## Getting the scene
 
-Download the scene from [NVIDIA ORCA](https://developer.nvidia.com/orca/beeple-zero-day).
+Download the converted glTF binaries from the
+[`zero-day-assets-v1` release](https://github.com/pavlov-net/bevy-examples/releases/tag/zero-day-assets-v1)
+into the `assets/` folder of this example. The example loads `measure_one` by default;
+the other two measures are optional.
 
-Bevy can't read FBX files, so you must convert the measures that you want into glTF
-binaries. The `convert.py` script does this with Blender 4 or Blender 5. Put the result in
-the `assets/` folder of this example.
+```console
+curl -L -o examples/zero_day/assets/zero_day_measure_one.glb \
+  https://github.com/pavlov-net/bevy-examples/releases/download/zero-day-assets-v1/zero_day_measure_one.glb
+
+curl -L -o examples/zero_day/assets/zero_day_measure_seven.glb \
+  https://github.com/pavlov-net/bevy-examples/releases/download/zero-day-assets-v1/zero_day_measure_seven.glb
+
+curl -L -o examples/zero_day/assets/zero_day_measure_seven_colored_lights.glb \
+  https://github.com/pavlov-net/bevy-examples/releases/download/zero-day-assets-v1/zero_day_measure_seven_colored_lights.glb
+```
+
+### Converting from source
+
+Alternatively, download the FBX scene from
+[NVIDIA ORCA](https://developer.nvidia.com/orca/beeple-zero-day) and convert it yourself.
+Bevy can't read FBX files, so the `convert.py` script converts each measure into a glTF
+binary with Blender 4 or Blender 5.
 
 ```console
 blender --background --python-exit-code 1 --python convert.py -- \
   "MEASURE_ONE/MEASURE_ONE.fbx" \
   "examples/zero_day/assets/zero_day_measure_one.glb"
-```
 
-The example loads `measure_one` by default. The other two measures are optional, and you
-convert them with the same command.
-
-```console
 blender --background --python-exit-code 1 --python convert.py -- \
   "MEASURE_SEVEN/MEASURE_SEVEN.fbx" \
   "examples/zero_day/assets/zero_day_measure_seven.glb"
@@ -52,3 +64,12 @@ NVIDIA RTX GPU and the DLSS SDK, so it's off by default.
 ```console
 cargo run -p zero_day --release --features dlss
 ```
+
+## Scene license
+
+"Zero-Day" is by Mike Winkelmann (Beeple), distributed through
+[NVIDIA ORCA](https://developer.nvidia.com/orca/beeple-zero-day) under
+[CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). The `.glb` files in the
+release are modified from the original: converted from FBX to glTF, materials rebuilt,
+hidden meshes removed, and animations baked. The code of this example is MIT/Apache-2.0
+like the rest of this repository.

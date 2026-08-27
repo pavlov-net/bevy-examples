@@ -24,3 +24,9 @@ cargo run -p zero_day --release
 
 Most of the examples need scene assets that this repository doesn't include. The
 `README.md` file of each example tells you how to get them.
+
+## License
+
+The code is dual-licensed under MIT or Apache-2.0. The scene assets are third-party
+works under their own licenses; each example's `README.md` states the license and the
+attribution.

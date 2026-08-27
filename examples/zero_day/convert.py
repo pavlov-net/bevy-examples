@@ -227,13 +227,22 @@ def normalize_materials(path):
     ``OPAQUE``.
 
     A black ``emissiveFactor`` multiplies the ``emissiveTexture`` to zero, and the
-    emissive panels are the only lights in the scene, so set those factors to white."""
+    emissive panels are the only lights in the scene, so set those factors to white.
+
+    Also set ``asset.copyright`` to the CC BY 4.0 attribution, because the ``.glb``
+    travels without this README."""
     with open(path, "rb") as f:
         data = f.read()
     magic, version, _ = struct.unpack_from("<III", data, 0)
     json_len, json_type = struct.unpack_from("<II", data, 12)
     gltf = json.loads(data[20 : 20 + json_len])
     bin_chunk = memoryview(data)[20 + json_len :]  # BIN chunk header and payload, not changed
+
+    gltf.setdefault("asset", {})["copyright"] = (
+        "Zero-Day by Mike Winkelmann (Beeple), "
+        "https://developer.nvidia.com/orca/beeple-zero-day, "
+        "CC BY 4.0, modified (converted to glTF)"
+    )
 
     opaqued = emissive_promoted = 0
     for material in gltf.get("materials", []):
